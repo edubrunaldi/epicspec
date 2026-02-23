@@ -37,6 +37,8 @@ Confirm to start, or ask questions first.
 
 Do not proceed until the user confirms.
 
+Once the user confirms, update the `Status:` field in the story file from its current value to `In Progress` before writing any code. This ensures the file accurately reflects that implementation has started, even if the session is interrupted.
+
 ---
 
 ## Phase 2 — Task-by-task implementation
@@ -195,6 +197,24 @@ Notes for next story:
 - <any out-of-scope improvements noticed during implementation>
 ```
 
+Before checking epic completion, update the `Status:` field in the story file to `Done`. This must happen before reading other stories' statuses — the current story counts toward the epic-complete check.
+
+After producing the completion summary, check whether the full epic is done:
+
+1. Count all `.md` files in `epicspec/epics/<feature-name>/stories/`
+2. Read the `Status:` field in each file
+3. If every story is `Done`, append to the output:
+
+```
+─────────────────────────────────────
+All N stories in this epic are complete.
+
+Run /epicspec:archive to archive <feature-name> and move it out of active development.
+─────────────────────────────────────
+```
+
+If any story is not yet `Done`, say nothing — only surface this nudge when the entire epic is complete.
+
 ---
 
 ## Running notes
@@ -244,3 +264,5 @@ To resume: start from Task 3 after resolving <blocker>.
 - **Never skip the Testing phase** — tests are part of the story, not optional extras
 - **Never mark the story done if any acceptance criterion is unverified** — the Phase 4 sweep must pass before the completion summary
 - **Never silently skip unavailable verification** — if you can't run a verification, tell the user and ask how to proceed
+- **Always update story Status in the file** — set `In Progress` when implementation begins (Phase 1), set `Done` when the story is fully verified (Phase 5); never leave the file with a stale status
+- **Always check for epic completion after story completion** — if all stories in the epic are Done, suggest /epicspec:archive

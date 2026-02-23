@@ -66,7 +66,8 @@ Once the breakdown is approved, generate each story file in order:
    a. Copy `epicspec/story-template.md` to `epicspec/epics/<feature-name>/stories/<story-name>.md`
     - Use kebab-case for the file name (e.g., `create-user-schema.md`, not `Create User Schema.md`)
       b. Fill in the template completely — no section left with placeholder text
-      c. Generate all tasks for that story before moving to the next
+      c. Set the story's `Status:` field to `Ready` — a generated story is ready to be implemented immediately
+      d. Generate all tasks for that story before moving to the next
 
 After generating all files, print a summary:
 ```

@@ -2,7 +2,7 @@
 
 **Spec:** `epicspec/epics/<feature-name>/spec.md`
 **Date:** [YYYY-MM-DD]
-**Status:** Draft | Ready | In Progress | Done
+**Status:** Ready | In Progress | Done | Archived
 
 ---
 
