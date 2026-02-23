@@ -1,7 +1,8 @@
 {
   "name": "epicspec",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Spec-first development for AI-assisted engineering",
+  "author": "Eduardo Brunaldi",
   "license": "MIT",
   "type": "module",
   "bin": {
@@ -10,14 +11,34 @@
   "engines": {
     "node": ">=18.0.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edubrunaldi/epicspec.git"
+  },
+  "homepage": "https://github.com/edubrunaldi/epicspec#readme",
+  "bugs": {
+    "url": "https://github.com/edubrunaldi/epicspec/issues"
+  },
   "files": [
     "bin/",
     "template/",
     "LICENSE",
-    "README.md"
+    "README.md",
+    "CHANGELOG.md"
   ],
+  "scripts": {
+    "test": "node --test test/cli.test.js",
+    "lint": "eslint bin/",
+    "format": "prettier --write bin/"
+  },
   "dependencies": {
     "@clack/prompts": "^0.7.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.0.1",
+    "globals": "^17.3.0",
+    "prettier": "^3.0.0"
   },
   "keywords": [
     "ai",

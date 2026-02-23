@@ -1,0 +1,4 @@
+.github/
+test/
+eslint.config.js
+.prettierrc.json
