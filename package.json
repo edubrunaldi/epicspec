@@ -1,0 +1,21 @@
+{
+  "name": "epicspec",
+  "version": "0.1.0",
+  "description": "Spec-first development for AI-assisted engineering",
+  "license": "MIT",
+  "keywords": [
+    "ai",
+    "spec",
+    "claude",
+    "claude-code",
+    "sdd",
+    "spec-driven-development",
+    "engineering",
+    "methodology"
+  ],
+  "files": [
+    "template/",
+    "LICENSE",
+    "README.md"
+  ]
+}
