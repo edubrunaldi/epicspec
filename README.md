@@ -38,6 +38,7 @@ No code is written until the spec is approved. No story starts until the previou
 
 ## Example
 
+
 ### 1. Create the spec
 
 ```
