@@ -8,6 +8,18 @@ No code is written until the spec is approved. No story starts until the previou
 
 ---
 
+## Table of contents
+
+- [How it works](#how-it-works)
+- [Example](#example)
+- [Getting started](#getting-started)
+- [Commands](#commands)
+- [File layout](#file-layout)
+- [Available agents](#available-agents)
+- [How to contribute](#how-to-contribute)
+
+---
+
 ## How it works
 
 ```
@@ -142,7 +154,7 @@ agent:  Archived: notification-preferences
 
 ## Getting started
 
-### Manual install (now)
+### Manual install
 
 **Claude Code**
 
@@ -166,11 +178,20 @@ template/epicspec/                        →  epicspec/
 
 Then use `/epicspec-create-spec` in Cursor chat.
 
-### npm install (coming soon)
+### npm install
 
 ```bash
-npx epicspec init
+npm install -g epicspec
+epicspec init .
 ```
+
+Or without installing globally:
+
+```bash
+npx epicspec init .
+```
+
+The CLI asks which agents you use and copies the right files automatically.
 
 ---
 

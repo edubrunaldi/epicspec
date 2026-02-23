@@ -3,6 +3,22 @@
   "version": "0.1.0",
   "description": "Spec-first development for AI-assisted engineering",
   "license": "MIT",
+  "type": "module",
+  "bin": {
+    "epicspec": "./bin/epicspec.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "bin/",
+    "template/",
+    "LICENSE",
+    "README.md"
+  ],
+  "dependencies": {
+    "@clack/prompts": "^0.7.0"
+  },
   "keywords": [
     "ai",
     "spec",
@@ -12,10 +28,5 @@
     "spec-driven-development",
     "engineering",
     "methodology"
-  ],
-  "files": [
-    "template/",
-    "LICENSE",
-    "README.md"
   ]
 }
