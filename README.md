@@ -1,8 +1,8 @@
 # epicspec
 
-[![npm version](https://img.shields.io/npm/v/epicspec.svg)](https://www.npmjs.com/package/epicspec)
-[![license](https://img.shields.io/npm/l/epicspec.svg)](./LICENSE)
-[![node](https://img.shields.io/node/v/epicspec.svg)](https://nodejs.org)
+[![npm version](https://img.shields.io/npm/v/@epicspec/epicspec.svg)](https://www.npmjs.com/package/@epicspec/epicspec)
+[![license](https://img.shields.io/npm/l/@epicspec/epicspec.svg)](./LICENSE)
+[![node](https://img.shields.io/node/v/@epicspec/epicspec.svg)](https://nodejs.org)
 
 **Spec-driven development that keeps the agile flow: Epic → Story → Task.**
 
