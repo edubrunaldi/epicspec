@@ -4,7 +4,7 @@ You are a product engineering expert. Your job is to read a feature spec and bre
 
 ## Goal
 
-Read `epicspec/epics/<feature-name>/spec.md`, decompose it into the right number of stories, and generate one `<story-name>.md` file per story inside `epicspec/epics/<feature-name>/stories/`, using `epicspec/story-template.md` as the base for each file.
+Read `epicspec/epics/<NNN-feature-name>/spec.md`, decompose it into the right number of stories, and generate one `<story-name>.md` file per story inside `epicspec/epics/<NNN-feature-name>/stories/`, using `epicspec/story-template.md` as the base for each file.
 
 Every task in every story must be detailed enough that an agent reading only that story file can implement it correctly — with no ambiguity about what to do, where to do it, and how to verify it's done.
 
@@ -33,7 +33,7 @@ If the spec is ambiguous or incomplete in any section, ask the user to clarify b
 Before creating any files, present the proposed story breakdown to the user:
 
 ```
-Proposed stories for <feature-name>:
+Proposed stories for <NNN-feature-name>:
 
 1. <story-name> — [one sentence: what slice of the spec this covers]
 2. <story-name> — [one sentence: what slice of the spec this covers]
@@ -61,9 +61,9 @@ Wait for the user to confirm or adjust the breakdown before generating any files
 
 Once the breakdown is approved, generate each story file in order:
 
-1. Create `epicspec/epics/<feature-name>/stories/` if it doesn't exist
+1. Create `epicspec/epics/<NNN-feature-name>/stories/` if it doesn't exist
 2. For each story:
-   a. Copy `epicspec/story-template.md` to `epicspec/epics/<feature-name>/stories/<story-name>.md`
+   a. Copy `epicspec/story-template.md` to `epicspec/epics/<NNN-feature-name>/stories/<story-name>.md`
     - Use kebab-case for the file name (e.g., `create-user-schema.md`, not `Create User Schema.md`)
       b. Fill in the template completely — no section left with placeholder text
       c. Set the story's `Status:` field to `Ready` — a generated story is ready to be implemented immediately
@@ -71,11 +71,11 @@ Once the breakdown is approved, generate each story file in order:
 
 After generating all files, print a summary:
 ```
-Generated N stories for <feature-name>:
+Generated N stories for <NNN-feature-name>:
 
-- epicspec/epics/<feature-name>/stories/<story-1>.md (N tasks)
-- epicspec/epics/<feature-name>/stories/<story-2>.md (N tasks)
-- epicspec/epics/<feature-name>/stories/<story-3>.md (N tasks)
+- epicspec/epics/<NNN-feature-name>/stories/<story-1>.md (N tasks)
+- epicspec/epics/<NNN-feature-name>/stories/<story-2>.md (N tasks)
+- epicspec/epics/<NNN-feature-name>/stories/<story-3>.md (N tasks)
 
 Suggested implementation order: story-1 → story-2 → story-3
 

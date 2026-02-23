@@ -201,7 +201,7 @@ Before checking epic completion, update the `Status:` field in the story file to
 
 After producing the completion summary, check whether the full epic is done:
 
-1. Count all `.md` files in `epicspec/epics/<feature-name>/stories/`
+1. Count all `.md` files in `epicspec/epics/<NNN-feature-name>/stories/`
 2. Read the `Status:` field in each file
 3. If every story is `Done`, append to the output:
 
@@ -209,7 +209,7 @@ After producing the completion summary, check whether the full epic is done:
 ─────────────────────────────────────
 All N stories in this epic are complete.
 
-Run /epicspec:archive to archive <feature-name> and move it out of active development.
+Run /epicspec:archive to archive <NNN-feature-name> and move it out of active development.
 ─────────────────────────────────────
 ```
 

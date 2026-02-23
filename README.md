@@ -1,10 +1,14 @@
 # epicspec
 
-**Spec Development Driven engineering for AI agents.**
+[![npm version](https://img.shields.io/npm/v/epicspec.svg)](https://www.npmjs.com/package/epicspec)
+[![license](https://img.shields.io/npm/l/epicspec.svg)](./LICENSE)
+[![node](https://img.shields.io/node/v/epicspec.svg)](https://nodejs.org)
 
-Write a spec, not a prompt. epicspec guides you through a structured conversation to produce a feature spec, breaks it into ordered stories, then implements each story task-by-task — with verification at every step before moving on.
+**Spec-driven development that keeps the agile flow: Epic → Story → Task.**
 
-No code is written until the spec is approved. No story starts until the previous one is verified.
+Write a spec, not a prompt. epicspec brings the agile Epic → Story → Task structure to AI-assisted engineering: a structured conversation produces a feature spec, the spec breaks into ordered stories, and each story is implemented task-by-task — with verification at every step before moving on.
+
+No code is written until the spec is approved. No story starts until the previous one is verified. No epic closes until every story is done.
 
 ---
 
@@ -62,13 +66,13 @@ agent:  Exploring the codebase...
         is excluded from the preferences object — it always sends.
         [... approach validated, spec drafted, reviewed, approved ...]
 
-agent:  Spec saved: epicspec/epics/notification-preferences/spec.md
+agent:  Spec saved: epicspec/epics/001-notification-preferences/spec.md
 ```
 
 ### 2. Break it into stories
 
 ```
-you:    /epicspec:create-stories @epicspec/epics/notification-preferences/spec.md
+you:    /epicspec:create-stories @epicspec/epics/001-notification-preferences/spec.md
 
 agent:  Proposed breakdown:
 
@@ -84,16 +88,16 @@ agent:  Proposed breakdown:
 you:    looks good
 
 agent:  Generated 4 stories:
-        epicspec/epics/notification-preferences/stories/01-schema.md
-        epicspec/epics/notification-preferences/stories/02-mailer-check.md
-        epicspec/epics/notification-preferences/stories/03-preferences-api.md
-        epicspec/epics/notification-preferences/stories/04-preferences-ui.md
+        epicspec/epics/001-notification-preferences/stories/01-schema.md
+        epicspec/epics/001-notification-preferences/stories/02-mailer-check.md
+        epicspec/epics/001-notification-preferences/stories/03-preferences-api.md
+        epicspec/epics/001-notification-preferences/stories/04-preferences-ui.md
 ```
 
 ### 3. Implement story by story
 
 ```
-you:    /epicspec:implement-story @epicspec/epics/notification-preferences/stories/01-schema.md
+you:    /epicspec:implement-story @epicspec/epics/001-notification-preferences/stories/01-schema.md
 
 agent:  Ready to implement: schema
 
@@ -128,9 +132,9 @@ you:    /epicspec:archive
 
 agent:  Active epics:
 
-        1. notification-preferences
+        1. 001-notification-preferences
 
-        Ready to archive: notification-preferences
+        Ready to archive: 001-notification-preferences
 
         Stories:
           ✓ 01-schema          — Done
@@ -138,15 +142,15 @@ agent:  Active epics:
           ✓ 03-preferences-api — Done
           ✓ 04-preferences-ui  — Done
 
-        Location: epicspec/epics/notification-preferences/  →  epicspec/epics/archive/notification-preferences/
+        Location: epicspec/epics/001-notification-preferences/  →  epicspec/epics/archive/001-notification-preferences/
 
         Confirm to proceed, or reply "no" to cancel.
 
 you:    yes
 
-agent:  Archived: notification-preferences
+agent:  Archived: 001-notification-preferences
 
-        Moved to: epicspec/epics/archive/notification-preferences/
+        Moved to: epicspec/epics/archive/001-notification-preferences/
         Stories marked Archived: 4
 ```
 
@@ -208,7 +212,7 @@ Leads a 6-phase structured conversation before any code is written:
 3. **Approach validation** — presents the plan, waits for your confirmation
 4. **Spec generation** — fills `epicspec/spec-template.md` with real findings
 5. **Draft review** — presents the full spec, iterates until you approve
-6. **Save** — writes to `epicspec/epics/<feature-name>/spec.md`
+6. **Save** — writes to `epicspec/epics/<NNN-feature-name>/spec.md`
 
 Nothing is saved without your explicit approval.
 
@@ -218,7 +222,7 @@ Reads an approved spec and breaks it into 2–5 independent, dependency-ordered 
 
 1. Reads and validates every section of the spec
 2. Proposes the breakdown with dependency order and shared files — waits for your approval
-3. Generates each story file at `epicspec/epics/<feature-name>/stories/<story-name>.md`
+3. Generates each story file at `epicspec/epics/<NNN-feature-name>/stories/<story-name>.md`
 
 Each story is self-contained: an agent reading only that file has everything needed to implement it.
 
@@ -256,13 +260,13 @@ epicspec/
   spec-template.md          # base template used by /create-spec
   story-template.md         # base template used by /create-stories
   epics/
-    <feature-name>/
+    <NNN-feature-name>/
       spec.md               # generated by /create-spec
       stories/
         01-<story-name>.md  # generated by /create-stories
         02-<story-name>.md
     archive/
-      <feature-name>/       # moved here by /epicspec:archive
+      <NNN-feature-name>/   # moved here by /epicspec:archive
         spec.md
         stories/
           01-<story-name>.md

@@ -6,7 +6,7 @@ You are a product engineering expert. Your job is to lead a structured conversat
 
 Gather enough context — through conversation and codebase exploration — to produce a spec rich enough for `/create-stories` to generate detailed, actionable stories without losing context between phases.
 
-The final spec will be saved at `epicspec/epics/<feature-name>/spec.md`, using `epicspec/spec-template.md` as the base.
+The final spec will be saved at `epicspec/epics/<NNN-feature-name>/spec.md`, using `epicspec/spec-template.md` as the base.
 
 ---
 
@@ -19,6 +19,26 @@ When the user provides a task description, ask as many questions as needed to fu
 - **Constraints** — what is explicitly out of scope
 
 Do not move to Phase 2 until you have clear answers to all three dimensions. If any answer raises new questions, follow up before proceeding.
+
+Before confirming, determine the epic number:
+1. Scan `epicspec/epics/` and `epicspec/epics/archive/` for subdirectories
+2. For each directory whose name starts with three digits followed by a hyphen, extract that number
+3. If none exist, use `001`
+4. Otherwise use the highest number found + 1, zero-padded to 3 digits
+5. Combine with the kebab-case feature name to form the epic directory name: `NNN-feature-name`
+
+Before moving to Phase 2, confirm understanding in this format:
+
+```
+Understanding confirmed: <NNN-feature-name>
+
+Epic directory: epicspec/epics/<NNN-feature-name>/
+What: <one sentence — expected behavior in product terms>
+Why: <one sentence — the real problem being solved>
+Constraints: <bullet list of explicit out-of-scope items, or "None stated">
+
+Moving to technical exploration. Let me know if anything needs adjusting.
+```
 
 Example opening:
 > "Got it. Before exploring the code, I need to understand what you're trying to achieve. Let me ask a few things..."
@@ -39,6 +59,27 @@ Be explicit about what you find:
 
 If something is unclear after exploring, ask the user to clarify rather than making assumptions. Run as many rounds as needed until you have full technical confidence.
 
+When exploration is complete, present findings before proceeding:
+
+```
+Exploration findings: <NNN-feature-name>
+
+Files involved:
+- <path> — <what it does relevant to this feature>
+- <path> — <what it does relevant to this feature>
+
+Patterns observed:
+- <pattern or convention to follow>
+
+Impact points:
+- <non-obvious file or module that could be affected>
+
+Unknowns:
+- <anything not found, or unclear after exploration — or "None">
+
+Ready to propose an approach. Confirm or ask questions.
+```
+
 ---
 
 ## Phase 3 — Approach validation
@@ -52,11 +93,33 @@ Before writing the spec, present your proposed implementation approach clearly:
 
 Wait for confirmation or adjustment before proceeding. If the user's response raises new questions, continue the discussion until the approach is fully aligned.
 
+Present the approach in this format:
+
+```
+Proposed approach: <NNN-feature-name>
+
+Approach: <2–4 sentences on the technical approach and why it fits the codebase>
+
+Trade-offs:
+- Pro: <benefit>
+- Con: <cost or risk>
+
+Alternatives considered:
+- <alternative> — <why not recommended>
+[or "No strong alternatives identified."]
+
+Open decisions (needs your input):
+- <decision> — <options and your recommendation>
+[or "None — all decisions are clear."]
+
+Confirm to draft the spec, or adjust the approach.
+```
+
 ---
 
 ## Phase 4 — Spec generation
 
-Once the approach is validated, create `epicspec/epics/<feature-name>/` if it doesn't exist, then draft the spec using `epicspec/spec-template.md` as the structure.
+Once the approach is validated, create `epicspec/epics/<NNN-feature-name>/` if it doesn't exist, then draft the spec using `epicspec/spec-template.md` as the structure.
 
 Fill every section using what you gathered in Phases 1–3. The following guidance ensures each section has the depth that `/create-stories` needs downstream.
 
@@ -90,7 +153,7 @@ Every criterion must be independently verifiable by a test or a human. Include a
 Based on the feature's complexity, define what needs unit tests (isolated logic), integration tests (flows across modules), and manual testing (visual/UX). Reference specific functions or flows from Sections 2 and 5.
 
 **Section 10 — References:**
-Link any mockups, designs, or documentation referenced during Phases 1–3. If Agent OS shape-spec output exists, link it here.
+Link any mockups, designs, or documentation referenced during Phases 1–3. If design mockups, ADRs, or related specs exist, link them here.
 
 ---
 
@@ -99,7 +162,7 @@ Link any mockups, designs, or documentation referenced during Phases 1–3. If A
 Do not save the file yet. Present the full draft to the user in conversation:
 
 ```
-Spec draft for: <feature-name>
+Spec draft for: <NNN-feature-name>
 
 <full spec content>
 
@@ -122,11 +185,11 @@ Iterate until the user approves. A spec saved without review contaminates everyt
 
 Once approved:
 
-1. Write the final spec to `epicspec/epics/<feature-name>/spec.md`
+1. Write the final spec to `epicspec/epics/<NNN-feature-name>/spec.md`
 2. Print confirmation:
 
 ```
-Spec saved: epicspec/epics/<feature-name>/spec.md
+Spec saved: epicspec/epics/<NNN-feature-name>/spec.md
 
 Sections filled: N/N
 Next step: run /create-stories to break this into implementable stories.
@@ -143,3 +206,6 @@ Next step: run /create-stories to break this into implementable stories.
 - **Edge cases must be concrete** — derived from what you observed in the code, not invented
 - **Acceptance criteria must be verifiable** — never write "should work correctly"
 - **Never leave placeholder text** — every section gets filled or gets "N/A — [reason]"
+- **Always use `NNN-kebab-case` for the epic directory name** — three-digit zero-padded number prefix followed by a hyphen and the kebab-case name (e.g., `001-notification-preferences`). Determine the number by scanning existing epics (including `epicspec/epics/archive/`) and incrementing the highest found.
+- **Always confirm the feature name with the user before creating the directory** — the name becomes the path and cannot be easily changed later
+- **Never reference the spec as done until the user says "approved"** — iterate on the draft as many times as needed

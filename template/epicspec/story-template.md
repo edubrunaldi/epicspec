@@ -1,6 +1,6 @@
 # Story: [Story Name]
 
-**Spec:** `epicspec/epics/<feature-name>/spec.md`
+**Spec:** `epicspec/epics/<NNN-feature-name>/spec.md`
 **Date:** [YYYY-MM-DD]
 **Status:** Ready | In Progress | Done | Archived
 

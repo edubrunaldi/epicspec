@@ -2,7 +2,6 @@
 
 **Author:** [name]
 **Date:** [YYYY-MM-DD]
-**Status:** Draft | In Review | Approved | In Progress | Done | Deprecated
 
 ---
 
