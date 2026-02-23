@@ -185,14 +185,14 @@ Then use `/epicspec-create-spec` in Cursor chat.
 ### npm install
 
 ```bash
-npm install -g epicspec
+npm install -g @epicspec/epicspec
 epicspec init .
 ```
 
 Or without installing globally:
 
 ```bash
-npx epicspec init .
+npx @epicspec/epicspec init .
 ```
 
 The CLI asks which agents you use and copies the right files automatically.
