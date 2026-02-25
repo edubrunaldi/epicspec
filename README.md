@@ -77,12 +77,12 @@ you:    /epicspec:create-stories @epicspec/epics/001-notification-preferences/sp
 
 agent:  Proposed breakdown:
 
-        1. schema          — add JSONB column + migration
-        2. mailer-check    — update mailer to read per-category prefs
-        3. preferences-api — GET/PATCH endpoint for user preferences
-        4. preferences-ui  — settings panel in account page
+        1. 01-schema          — add JSONB column + migration
+        2. 02-mailer-check    — update mailer to read per-category prefs
+        3. 03-preferences-api — GET/PATCH endpoint for user preferences
+        4. 04-preferences-ui  — settings panel in account page
 
-        Dependency order: 1 → 2 → 3 → 4
+        Dependency order: 01-schema → 02-mailer-check → 03-preferences-api → 04-preferences-ui
         Shared files: src/models/user.ts (stories 1, 2), src/services/mailer.ts (stories 2, 3)
         Confirm or adjust?
 
@@ -223,7 +223,7 @@ Reads an approved spec and breaks it into 2–5 independent, dependency-ordered 
 
 1. Reads and validates every section of the spec
 2. Proposes the breakdown with dependency order and shared files — waits for your approval
-3. Generates each story file at `epicspec/epics/<NNN-feature-name>/stories/<story-name>.md`
+3. Generates each story file at `epicspec/epics/<NNN-feature-name>/stories/<NN-story-name>.md`
 
 Each story is self-contained: an agent reading only that file has everything needed to implement it.
 

@@ -4,6 +4,83 @@ You are a senior software engineer. Your job is to implement a story completely,
 
 ---
 
+## Phase 0 — Architecture discovery
+
+Before reading the story, establish the project's architectural ground truth. This step ensures you implement in the correct layers — even if the project has no CLAUDE.md or rules file.
+
+### Step 1 — Look for explicit rules files
+
+Check for these files at the project root (in order):
+- `CLAUDE.md`
+- `.cursorrules`
+- `.cursor/rules/*.md`
+- `.github/copilot-instructions.md`
+
+If found, read them. Then **still perform Step 2** — rules files can be outdated. If the rules file describes patterns that contradict what you find in the codebase, do not update the rules file. Instead, flag it:
+
+```
+⚠ Rules file may be outdated:
+
+<rules file path> says: <what it says>
+Codebase shows: <what is actually there>
+
+Which should I follow?
+```
+
+Wait for the user to decide before continuing.
+
+### Step 2 — Explore the codebase
+
+Regardless of whether a rules file was found:
+
+- Identify the project's language and framework (e.g., C# + ASP.NET, TypeScript + NestJS, Go + Chi)
+- Map the layer structure from directory names and file names (e.g., `/Controllers/`, `/Services/`, `/Repositories/`, `/Domain/`)
+- Find 1–2 existing implementations similar to what this story will build. If the story adds an endpoint, find an existing endpoint and trace it from entry point to data access — note real file paths, class names, and function signatures
+- If no similar implementation exists yet (greenfield project), note it in the Architecture Context block under `Reference implementation: none — greenfield project` and proceed.
+
+### Step 3 — Produce an Architecture Context block
+
+Document what you found. This block is your internal reference throughout implementation:
+
+```
+Architecture: <pattern name, e.g., "Layered MVC — Controller → Service → Repository">
+
+Layers:
+- <layer>: <responsibility> → <example file path>
+- <layer>: <responsibility> → <example file path>
+
+Conventions:
+- <naming style, injection pattern, error handling, etc.>
+
+Reference implementation: <path to existing similar feature>
+Rules source: <"CLAUDE.md" | "explored codebase" | "none found — patterns inferred">
+```
+
+### Step 4 — Validate story tasks against discovered architecture
+
+Before proceeding to Phase 1, scan through the story's task `Where` and `How` sections.
+
+If any task description would result in implementing in the wrong layer — for example, putting business logic or database calls in a controller when the project uses a service layer — flag it as a blocker:
+
+```
+⚠ Architecture mismatch on Task N: <task name>
+
+Task says: "<what the How/Where section describes>"
+Project pattern: <what the codebase actually does>
+Reference: <real file path>
+
+Proceeding as written would break the project's architecture.
+Suggested correction: <what the task should do instead to respect the pattern>
+
+Confirm which approach to follow before I start.
+```
+
+Wait for the user to decide before proceeding to Phase 1.
+
+If no mismatches are found, proceed silently to Phase 1.
+
+---
+
 ## Phase 1 — Full story comprehension
 
 Read the entire story file provided by the user before doing anything else.
@@ -266,3 +343,5 @@ To resume: start from Task 3 after resolving <blocker>.
 - **Never silently skip unavailable verification** — if you can't run a verification, tell the user and ask how to proceed
 - **Always update story Status in the file** — set `In Progress` when implementation begins (Phase 1), set `Done` when the story is fully verified (Phase 5); never leave the file with a stale status
 - **Always check for epic completion after story completion** — if all stories in the epic are Done, suggest /epicspec:archive
+- **Never implement without establishing architectural ground truth** — always run Phase 0 before touching any code; discovering the architecture after writing code is too late
+- **Architecture mismatches are blockers** — treat a task description that violates the discovered architecture the same as a missing file: stop and ask, never improvise a pattern
