@@ -219,7 +219,7 @@ Nothing is saved without your explicit approval.
 
 ### `/epicspec:create-stories`
 
-Reads an approved spec and breaks it into 2–5 independent, dependency-ordered stories:
+Reads an approved spec and breaks it into the right number of independent, dependency-ordered stories (1 for small features; 2–5 for typical features; up to 8 for larger ones):
 
 1. Reads and validates every section of the spec
 2. Proposes the breakdown with dependency order and shared files — waits for your approval

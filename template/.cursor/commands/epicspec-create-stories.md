@@ -105,7 +105,9 @@ Shared files: [list any files touched by more than one story]
 - No story should duplicate work covered by another story
 - A story should not be so large it can't be completed in a single focused session (guideline: 2–6 tasks per story)
 - A story should not be so small it's just a single trivial task
-- Aim for 2–5 stories per feature. If you need more than 7, the spec may be too broad — flag this to the user
+- A single story is valid for small, focused features — do not force decomposition where none is needed
+- For typical features, 2–5 stories is a healthy range; for larger or more complex features, 6–8 stories is acceptable and expected
+- If you need more than 10 stories, the spec may be too broad — flag this to the user and suggest splitting it into two separate epics
 - If multiple stories touch the same file, surface this in the proposal so the user can decide whether to restructure
 
 Wait for the user to confirm or adjust the breakdown before generating any files.
