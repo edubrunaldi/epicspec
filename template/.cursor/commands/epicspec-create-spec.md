@@ -21,11 +21,14 @@ When the user provides a task description, ask as many questions as needed to fu
 Do not move to Phase 2 until you have clear answers to all three dimensions. If any answer raises new questions, follow up before proceeding.
 
 Before confirming, determine the epic number:
-1. Scan `epicspec/epics/` and `epicspec/epics/archive/` for subdirectories
-2. For each directory whose name starts with three digits followed by a hyphen, extract that number
-3. If none exist, use `001`
-4. Otherwise use the highest number found + 1, zero-padded to 3 digits
-5. Combine with the kebab-case feature name to form the epic directory name: `NNN-feature-name`
+1. **Actively scan** both `epicspec/epics/` and `epicspec/epics/archive/` for subdirectories — use file-listing tools (glob, ls, or equivalent), do NOT rely on memory or assumptions
+2. For each directory whose name starts with three digits followed by a hyphen (`NNN-`), extract that number
+3. List all matches found (from both directories) before deciding — if you skip this step, the number will be wrong
+4. If no matches exist in either directory, use `001`
+5. Otherwise use the highest number found across both directories + 1, zero-padded to 3 digits
+6. Combine with the kebab-case feature name to form the epic directory name: `NNN-feature-name`
+
+> **Important**: Archived epics in `epicspec/epics/archive/` still count. Numbers must never be reused. If `001` and `002` are in archive, the next epic is `003`.
 
 Before moving to Phase 2, confirm understanding in this format:
 
@@ -206,6 +209,6 @@ Next step: run /epicspec-create-stories to break this into implementable stories
 - **Edge cases must be concrete** — derived from what you observed in the code, not invented
 - **Acceptance criteria must be verifiable** — never write "should work correctly"
 - **Never leave placeholder text** — every section gets filled or gets "N/A — [reason]"
-- **Always use `NNN-kebab-case` for the epic directory name** — three-digit zero-padded number prefix followed by a hyphen and the kebab-case name (e.g., `001-notification-preferences`). Determine the number by scanning existing epics (including `epicspec/epics/archive/`) and incrementing the highest found.
+- **Always use `NNN-kebab-case` for the epic directory name** — three-digit zero-padded number prefix followed by a hyphen and the kebab-case name (e.g., `001-notification-preferences`). Determine the number by **actively scanning** both `epicspec/epics/` and `epicspec/epics/archive/` using file-listing tools and incrementing the highest found. Numbers from archived epics must never be reused.
 - **Always confirm the feature name with the user before creating the directory** — the name becomes the path and cannot be easily changed later
 - **Never reference the spec as done until the user says "approved"** — iterate on the draft as many times as needed
