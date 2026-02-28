@@ -1,6 +1,6 @@
 {
   "name": "@epicspec/epicspec",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Spec-first development for AI-assisted engineering",
   "author": "Eduardo Brunaldi",
   "license": "MIT",
