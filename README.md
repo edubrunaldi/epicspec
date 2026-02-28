@@ -3,6 +3,7 @@
 [![npm version](https://img.shields.io/npm/v/@epicspec/epicspec.svg)](https://www.npmjs.com/package/@epicspec/epicspec)
 [![license](https://img.shields.io/npm/l/@epicspec/epicspec.svg)](./LICENSE)
 [![node](https://img.shields.io/node/v/@epicspec/epicspec.svg)](https://nodejs.org)
+[![CI](https://github.com/edubrunaldi/epicspec/actions/workflows/ci.yml/badge.svg)](https://github.com/edubrunaldi/epicspec/actions/workflows/ci.yml)
 
 **Spec-driven development that keeps the agile flow: Epic → Story → Task.**
 
@@ -12,32 +13,143 @@ No code is written until the spec is approved. No story starts until the previou
 
 ---
 
+## Why epicspec?
+
+- **No code without an approved spec** — structured gates prevent wasted implementation.
+- **Specs are versioned artifacts, not chat messages** — your feature intent survives session boundaries.
+- **Stories preserve context across sessions** — each story file is self-contained; no re-asking needed.
+- **Verification at every step** — bugs surface at the task level, not after an entire story is built.
+- **Works with Claude Code, Cursor, and GitHub Copilot** — native command formats for each.
+
+---
+
 ## Table of contents
 
-- [How it works](#how-it-works)
-- [Example](#example)
+- [Why epicspec?](#why-epicspec)
+- [Quick start](#quick-start)
 - [Getting started](#getting-started)
 - [Commands](#commands)
+- [How it works](#how-it-works)
+- [Example](#example)
 - [File layout](#file-layout)
-- [Available agents](#available-agents)
 - [How to contribute](#how-to-contribute)
+
+---
+
+## Quick start
+
+```bash
+npx @epicspec/epicspec init .
+```
+
+Then run `/epicspec:create-spec` in your AI agent. See [Getting started](#getting-started) for manual install and options.
+
+---
+
+## Getting started
+
+**Requires Node.js >= 18.**
+
+### npm install
+
+```bash
+npm install -g @epicspec/epicspec
+epicspec init .
+```
+
+Or without installing globally:
+
+```bash
+npx @epicspec/epicspec init .
+```
+
+Use `epicspec init . --force` to skip overwrite prompts when re-initializing an existing project. You can also run `epicspec --version` to confirm the installed version, or `epicspec --help` to see all available commands.
+
+The CLI asks which agents you use and copies the right files automatically.
+
+### Manual install
+
+Copy the template files for your agent into your project root:
+
+| Agent | Copy from | Copy to | First command |
+|---|---|---|---|
+| Claude Code | `template/.claude/commands/epicspec/` | `.claude/commands/epicspec/` | `/epicspec:create-spec` |
+| Cursor | `template/.cursor/commands/epicspec-*.md` | `.cursor/commands/` | `/epicspec-create-spec` |
+| GitHub Copilot | `template/.github/prompts/epicspec-*.prompt.md` | `.github/prompts/` | `/epicspec-create-spec` |
+
+All agents also need `template/epicspec/` copied to `epicspec/`.
+
+---
+
+## Commands
+
+All commands run inside your AI agent (Claude Code, Cursor, or GitHub Copilot).
+
+### `/epicspec:create-spec`
+
+Leads a 6-phase structured conversation before any code is written:
+
+1. **Initial understanding** — What, Why, Constraints
+2. **Technical exploration** — reads the codebase, finds affected files and patterns
+3. **Approach validation** — presents the plan, waits for your confirmation
+4. **Spec generation** — fills `epicspec/spec-template.md` with real findings
+5. **Draft review** — presents the full spec, iterates until you approve
+6. **Save** — writes to `epicspec/epics/<NNN-feature-name>/spec.md`
+
+Nothing is saved without your explicit approval.
+
+### `/epicspec:create-stories`
+
+Reads an approved spec and breaks it into the right number of independent, dependency-ordered stories (1 for small features; 2–5 for typical features; up to 8 for larger ones):
+
+1. Reads and validates every section of the spec
+2. Proposes the breakdown with dependency order and shared files — waits for your approval
+3. Generates each story file at `epicspec/epics/<NNN-feature-name>/stories/<NN-story-name>.md`
+
+Each story is self-contained: an agent reading only that file has everything needed to implement it.
+
+### `/epicspec:implement-story`
+
+Implements a single story completely and verifiably:
+
+1. Reads the full story, confirms understanding, waits for your go-ahead
+2. Works task-by-task — re-reads each task, implements, verifies before moving on
+3. Runs all tests from the story's Testing section
+4. Sweeps every acceptance criterion — none marked done without explicit verification
+5. Produces a completion summary with notes for the next story
+
+If a blocker is found mid-task, implementation stops and reports exactly what was found.
+
+### `/epicspec:archive`
+
+Moves a completed epic from `epicspec/epics/` to `epicspec/epics/archive/`:
+
+1. Detects all active epics — if more than one exists, asks which to archive
+2. Shows a pre-archive summary with each story's status — warns if any are not Done
+3. Moves the epic folder and marks all story files as Archived
+4. Confirms the new location
+
+Nothing is deleted. The epic is always recoverable from `epicspec/epics/archive/`.
 
 ---
 
 ## How it works
 
 ```
-/epicspec:create-spec  →  /epicspec:create-stories  →  /epicspec:implement-story  →  /epicspec:archive
-        │                          │                             │                            │
-  6-phase structured          reads spec,               one story at a time,           moves epic to
-  conversation →              proposes breakdown →      task → verify → next           epics/archive/
-  spec.md                     story files               updates story status
+create-spec  →  create-stories  →  implement-story  →  archive
 ```
+
+1. **create-spec** — 6-phase structured conversation produces `spec.md`
+2. **create-stories** — reads the spec, proposes dependency-ordered story files
+3. **implement-story** — one story at a time: task → verify → next
+4. **archive** — moves the completed epic to `epics/archive/`
 
 ---
 
 ## Example
 
+<details>
+<summary>Full walkthrough — email notification preferences</summary>
 
 ### 1. Create the spec
 
@@ -155,111 +267,7 @@ agent:  Archived: 001-notification-preferences
         Stories marked Archived: 4
 ```
 
----
-
-## Getting started
-
-### Manual install
-
-**Claude Code**
-
-Copy these into your project root:
-
-```
-template/.claude/commands/epicspec/   →  .claude/commands/epicspec/
-template/epicspec/                    →  epicspec/
-```
-
-Then use `/epicspec:create-spec` in Claude Code chat.
-
-**Cursor**
-
-Copy these into your project root:
-
-```
-template/.cursor/commands/epicspec-*.md   →  .cursor/commands/
-template/epicspec/                        →  epicspec/
-```
-
-Then use `/epicspec-create-spec` in Cursor chat.
-
-**GitHub Copilot**
-
-Copy these into your project root:
-
-```
-template/.github/prompts/epicspec-*.prompt.md   →  .github/prompts/
-template/epicspec/                              →  epicspec/
-```
-
-Then use `/epicspec-create-spec` in Copilot Chat (VS Code, Visual Studio, or JetBrains).
-
-### npm install
-
-```bash
-npm install -g @epicspec/epicspec
-epicspec init .
-```
-
-Or without installing globally:
-
-```bash
-npx @epicspec/epicspec init .
-```
-
-The CLI asks which agents you use and copies the right files automatically.
-
----
-
-## Commands
-
-All commands run inside Claude Code.
-
-### `/epicspec:create-spec`
-
-Leads a 6-phase structured conversation before any code is written:
-
-1. **Initial understanding** — What, Why, Constraints
-2. **Technical exploration** — reads the codebase, finds affected files and patterns
-3. **Approach validation** — presents the plan, waits for your confirmation
-4. **Spec generation** — fills `epicspec/spec-template.md` with real findings
-5. **Draft review** — presents the full spec, iterates until you approve
-6. **Save** — writes to `epicspec/epics/<NNN-feature-name>/spec.md`
-
-Nothing is saved without your explicit approval.
-
-### `/epicspec:create-stories`
-
-Reads an approved spec and breaks it into the right number of independent, dependency-ordered stories (1 for small features; 2–5 for typical features; up to 8 for larger ones):
-
-1. Reads and validates every section of the spec
-2. Proposes the breakdown with dependency order and shared files — waits for your approval
-3. Generates each story file at `epicspec/epics/<NNN-feature-name>/stories/<NN-story-name>.md`
-
-Each story is self-contained: an agent reading only that file has everything needed to implement it.
-
-### `/epicspec:implement-story`
-
-Implements a single story completely and verifiably:
-
-1. Reads the full story, confirms understanding, waits for your go-ahead
-2. Works task-by-task — re-reads each task, implements, verifies before moving on
-3. Runs all tests from the story's Testing section
-4. Sweeps every acceptance criterion — none marked done without explicit verification
-5. Produces a completion summary with notes for the next story
-
-If a blocker is found mid-task, implementation stops and reports exactly what was found.
-
-### `/epicspec:archive`
-
-Moves a completed epic from `epicspec/epics/` to `epicspec/epics/archive/`:
-
-1. Detects all active epics — if more than one exists, asks which to archive
-2. Shows a pre-archive summary with each story's status — warns if any are not Done
-3. Moves the epic folder and marks all story files as Archived
-4. Confirms the new location
-
-Nothing is deleted. The epic is always recoverable from `epicspec/epics/archive/`.
+</details>
 
 ---
 
@@ -285,16 +293,7 @@ epicspec/
           02-<story-name>.md
 ```
 
----
-
-## Available agents
-
-| Agent | Status |
-|---|---|
-| Claude Code | Available — `/epicspec:create-spec` |
-| Cursor | Available — `/epicspec-create-spec` |
-| GitHub Copilot | Available — `/epicspec-create-spec` |
-| Windsurf | Planned |
+See [CHANGELOG.md](./CHANGELOG.md) for version history.
 
 ---
 
@@ -302,18 +301,20 @@ epicspec/
 
 Contributions are welcome. Here are the main ways to help:
 
-- **Add a new agent** — Windsurf, GitHub Copilot, and others are planned. If you've integrated epicspec into a new agent, submit a PR.
+- **Add a new agent** — If you've integrated epicspec into another agent, submit a PR.
 - **Improve command templates** — the prompts under `template/` drive the entire workflow. Better wording, clearer gates, tighter output formats.
 - **Fix bugs or docs** — open an issue or send a PR directly.
 - **Share feedback** — open an issue describing what felt awkward or broke.
 
 ### Setup
 
-No build step. Everything is markdown.
+The CLI lives in `bin/epicspec.js`. Commands and templates are markdown.
 
 ```bash
-git clone https://github.com/felipebarcelospro/epicspec.git
+git clone https://github.com/edubrunaldi/epicspec.git
 cd epicspec
+npm install
+npm test
 ```
 
 Files you'll most likely edit:
@@ -334,9 +335,9 @@ Files you'll most likely edit:
 
 ### Adding a new agent
 
-1. Copy the closest existing command file from `template/.claude/commands/epicspec/` or `template/.cursor/commands/`.
+1. Copy the closest existing command file from `template/.claude/commands/epicspec/`, `template/.cursor/commands/`, or `template/.github/prompts/`.
 2. Adapt the syntax and invocation format to the target agent.
-3. Update the **Available agents** table in `README.md`.
+3. Update the **Manual install** table in `README.md`.
 
 ### Guidelines
 
