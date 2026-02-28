@@ -1,3 +1,8 @@
+---
+description: "Archive a completed epic, moving it out of active development"
+agent: "agent"
+---
+
 # Command: /epicspec-archive
 
 You are a project engineer. Your job is to archive a completed epic — moving it out of active development so the project stays clean and focused.

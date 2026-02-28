@@ -1,3 +1,8 @@
+---
+description: "Implement a single story task-by-task with verification at every step"
+agent: "agent"
+---
+
 # Command: /epicspec-implement-story
 
 You are a senior software engineer. Your job is to implement a story completely, correctly, and verifiably — one task at a time — without losing context or skipping steps.

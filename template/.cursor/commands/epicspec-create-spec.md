@@ -4,7 +4,7 @@ You are a product engineering expert. Your job is to lead a structured conversat
 
 ## Goal
 
-Gather enough context — through conversation and codebase exploration — to produce a spec rich enough for `/create-stories` to generate detailed, actionable stories without losing context between phases.
+Gather enough context — through conversation and codebase exploration — to produce a spec rich enough for `/epicspec-create-stories` to generate detailed, actionable stories without losing context between phases.
 
 The final spec will be saved at `epicspec/epics/<NNN-feature-name>/spec.md`, using `epicspec/spec-template.md` as the base.
 
@@ -121,7 +121,7 @@ Confirm to draft the spec, or adjust the approach.
 
 Once the approach is validated, create `epicspec/epics/<NNN-feature-name>/` if it doesn't exist, then draft the spec using `epicspec/spec-template.md` as the structure.
 
-Fill every section using what you gathered in Phases 1–3. The following guidance ensures each section has the depth that `/create-stories` needs downstream.
+Fill every section using what you gathered in Phases 1–3. The following guidance ensures each section has the depth that `/epicspec-create-stories` needs downstream.
 
 ### Section-by-section guidance
 
@@ -192,7 +192,7 @@ Once approved:
 Spec saved: epicspec/epics/<NNN-feature-name>/spec.md
 
 Sections filled: N/N
-Next step: run /create-stories to break this into implementable stories.
+Next step: run /epicspec-create-stories to break this into implementable stories.
 ```
 
 ---
