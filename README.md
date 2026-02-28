@@ -183,6 +183,17 @@ template/epicspec/                        →  epicspec/
 
 Then use `/epicspec-create-spec` in Cursor chat.
 
+**GitHub Copilot**
+
+Copy these into your project root:
+
+```
+template/.github/prompts/epicspec-*.prompt.md   →  .github/prompts/
+template/epicspec/                              →  epicspec/
+```
+
+Then use `/epicspec-create-spec` in Copilot Chat (VS Code, Visual Studio, or JetBrains).
+
 ### npm install
 
 ```bash
@@ -282,6 +293,7 @@ epicspec/
 |---|---|
 | Claude Code | Available — `/epicspec:create-spec` |
 | Cursor | Available — `/epicspec-create-spec` |
+| GitHub Copilot | Available — `/epicspec-create-spec` |
 | Windsurf | Planned |
 
 ---
@@ -310,6 +322,7 @@ Files you'll most likely edit:
 |---|---|
 | `template/.claude/commands/epicspec/` | Claude Code commands |
 | `template/.cursor/commands/` | Cursor commands |
+| `template/.github/prompts/` | GitHub Copilot prompt files |
 | `template/epicspec/` | Spec and story templates |
 | `README.md` | Docs |
 
