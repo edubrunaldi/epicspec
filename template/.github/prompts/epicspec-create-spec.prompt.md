@@ -26,14 +26,14 @@ When the user provides a task description, ask as many questions as needed to fu
 Do not move to Phase 2 until you have clear answers to all three dimensions. If any answer raises new questions, follow up before proceeding.
 
 Before confirming, determine the epic number:
-1. **Actively scan** both `epicspec/epics/` and `epicspec/epics/archive/` for subdirectories — use file-listing tools (glob, ls, or equivalent), do NOT rely on memory or assumptions
-2. For each directory whose name starts with three digits followed by a hyphen (`NNN-`), extract that number
-3. List all matches found (from both directories) before deciding — if you skip this step, the number will be wrong
-4. If no matches exist in either directory, use `001`
-5. Otherwise use the highest number found across both directories + 1, zero-padded to 3 digits
+1. Run a recursive glob for `epicspec/epics/**/spec.md` — this finds specs in both active epics and `archive/`. Do NOT use trailing `/` in glob patterns (it won't match). Do NOT skip this step or rely on memory.
+2. From the matched paths, extract the parent directory name of each `spec.md` and find those starting with three digits followed by a hyphen (`NNN-`). Extract the number from each.
+3. List all matches found before deciding — if you skip this step, the number will be wrong
+4. If no matches exist, use `001`
+5. Otherwise use the highest number found + 1, zero-padded to 3 digits
 6. Combine with the kebab-case feature name to form the epic directory name: `NNN-feature-name`
 
-> **Important**: Archived epics in `epicspec/epics/archive/` still count. Numbers must never be reused. If `001` and `002` are in archive, the next epic is `003`.
+> **Important**: Archived epics in `epicspec/epics/archive/` count. Numbers must never be reused. If `001` and `002` are in archive, the next epic is `003`.
 
 Before moving to Phase 2, confirm understanding in this format:
 
