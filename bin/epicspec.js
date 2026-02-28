@@ -11,6 +11,7 @@ const TEMPLATE_DIR = join(__dirname, '..', 'template');
 const AGENTS = [
   { value: 'claude', label: 'Claude Code' },
   { value: 'cursor', label: 'Cursor' },
+  { value: 'copilot', label: 'GitHub Copilot' },
 ];
 
 // ── argument parsing ──────────────────────────────────────────────────────────
@@ -112,6 +113,18 @@ async function init(targetPath, force) {
         cpSync(join(src, file), join(dest, file));
       }
       s.stop('.cursor/commands/ ✓');
+    }
+
+    // GitHub Copilot
+    if (agents.includes('copilot')) {
+      s.start('Setting up GitHub Copilot...');
+      const dest = join(targetPath, '.github', 'prompts');
+      mkdirSync(dest, { recursive: true });
+      const src = join(TEMPLATE_DIR, '.github', 'prompts');
+      for (const file of readdirSync(src).filter(f => f.startsWith('epicspec'))) {
+        cpSync(join(src, file), join(dest, file));
+      }
+      s.stop('.github/prompts/ ✓');
     }
   } catch (err) {
     s.stop('Failed.');
