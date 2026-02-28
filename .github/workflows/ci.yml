@@ -16,5 +16,7 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
+      - name: Check bin/epicspec.js is executable
+        run: test -x bin/epicspec.js || (echo "ERROR: bin/epicspec.js is not executable. Run: git update-index --chmod=+x bin/epicspec.js" && exit 1)
       - run: npm run lint
       - run: npm test
